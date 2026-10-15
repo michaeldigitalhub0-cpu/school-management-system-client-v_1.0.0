@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Teachers — School Management System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <!-- <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap"
+    rel="stylesheet"> -->
+  <link rel="stylesheet" href="../../css/style.css" />
+</head>
+
+<body>
+
+  <div class="app-shell">
+
+    <!-- SIDEBAR (identical across pages — same markup as dashboard.html / students.html) -->
+    <aside class="sidebar">
+      <div class="sidebar__brand">School<span>MS</span></div>
+
+      <p class="sidebar__section-label">Overview</p>
+      <ul class="sidebar__nav">
+        <li><a href="dashboard.html" class="sidebar__link">Dashboard</a></li>
+      </ul>
+
+      <p class="sidebar__section-label">Records</p>
+      <ul class="sidebar__nav">
+        <li><a href="students.html" class="sidebar__link">Students</a></li>
+        <li><a href="teachers.html" class="sidebar__link is-active">Teachers</a></li>
+        <li><a href="classes.html" class="sidebar__link">Classes &amp; Subjects</a></li>
+      </ul>
+
+      <p class="sidebar__section-label">Academics</p>
+      <ul class="sidebar__nav">
+        <li><a href="../attendance.html" class="sidebar__link">Attendance</a></li>
+        <li><a href="../grades.html" class="sidebar__link">Grades</a></li>
+        <li><a href="timetable.html" class="sidebar__link">Timetable</a></li>
+      </ul>
+
+      <p class="sidebar__section-label">Communication</p>
+      <ul class="sidebar__nav">
+        <li><a href="announcements.html" class="sidebar__link">Announcements</a></li>
+      </ul>
+    </aside>
+
+    <header class="topbar">
+      <h2 class="topbar__title">Teachers</h2>
+      <div class="topbar__user">
+        <span class="role-pill" id="userRole">Admin</span>
+        <span id="userName">—</span>
+        <button class="btn btn-secondary btn-sm" id="logoutBtn">Log out</button>
+      </div>
+    </header>
+
+    <main class="main">
+
+      <div id="teachersAlert"></div>
+
+      <!-- Add / edit form -->
+      <section class="card">
+        <div class="card__header">
+          <h3 id="formTitle">Add teacher</h3>
+        </div>
+        <form id="teacherForm">
+          <input type="hidden" id="teacherId" />
+          <div class="form-grid">
+            <div class="field">
+              <label for="firstName">First name</label>
+              <input type="text" id="firstName" required />
+            </div>
+            <div class="field">
+              <label for="lastName">Last name</label>
+              <input type="text" id="lastName" required />
+            </div>
+            <div class="field">
+              <label for="middleName">Middle name</label>
+              <input type="text" id="middleName" />
+            </div>
+            <div class="field">
+              <label for="gender">Gender</label>
+              <select name="gender" id="gender">
+                <option value="" selected disabled>Select gender</option>
+                <option value="M">Male</option>
+                <option value="F">Female</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="dob">Date of birth</label>
+              <input type="date" id="dob" required />
+            </div>
+            <div class="field">
+              <label for="contact">Contact</label>
+              <input type="text" id="contact" required />
+            </div>
+          </div>
+          <div class="field">
+            <label for="class_domain">Class domain</label>
+            <select name="class_domain" id="class_domain" required>
+              <option value="" disabled selected>Select class domain</option>
+              <!-- Populated using teachers.js -->
+            </select>
+            <label for="class_group">Class group</label>
+            <select name="class_group" id="class_group" required>
+              <option value="" disabled selected>Select class group</option>
+              <!-- Populated using teachers.js -->
+            </select>
+            <label for="class_group">Class arm</label>
+            <select name="class_arm" id="class_arm" required>
+              <option value="" disabled selected>Select class arm</option>
+              <!-- Populated using teachers.js -->
+            </select>
+          </div>
+          <div class=" field">
+            <label>Subject taught</label>
+            <label for="subjectDivision">Division</label>
+            <select name="subjectDivision" id="subjectDivision" required>
+              <option value="" disabled selected>Select subject division</option>
+              <!-- Populated using teachers.js -->
+            </select>
+            <label for="availableSubjects">Active subjects</label>
+            <select name="availableSubjects" id="availableSubjects" required>
+              <option value="" disabled selected>Select subject</option>
+              <!-- Populated using teachers.js -->
+            </select>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Save teacher</button>
+            <button type="button" class="btn btn-secondary" id="cancelEditBtn">Cancel</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- Records table -->
+      <section class="card">
+        <div class="table-toolbar">
+          <h3 style="margin:0;">All teachers</h3>
+          <input type="search" id="teacherSearch" placeholder="Search by name or staff ID" />
+        </div>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Staff ID</th>
+                <th>Name</th>
+                <th>Gender</th>
+                <th>Subject(s)</th>
+                <th>Class</th>
+                <th>Contact</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="teachersTableBody">
+              <!-- rows rendered by js/teachers.js -->
+              <tr>
+                <td colspan="7">
+                  <div class="empty-state">No teachers added yet.</div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script type="module" src="../../js/database/db.js"></script>
+  <script type="module" src="../../js/auth.js"></script>
+  <script type="module" src="../../js/utils.js"></script>
+  <script type="module" src="../../js/teachers.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Classes &amp; Subjects — School Management System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <!-- <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap"
+    rel="stylesheet"> -->
+  <link rel="stylesheet" href="../../css/style.css" />
+</head>
+
+<body>
+
+  <div class="app-shell">
+
+    <!-- SIDEBAR — identical markup to dashboard.html / students.html / teachers.html -->
+    <aside class="sidebar">
+      <div class="sidebar__brand">School<span>MS</span></div>
+
+      <p class="sidebar__section-label">Overview</p>
+      <ul class="sidebar__nav">
+        <li><a href="dashboard.html" class="sidebar__link">Dashboard</a></li>
+      </ul>
+
+      <p class="sidebar__section-label">Records</p>
+      <ul class="sidebar__nav">
+        <li><a href="students.html" class="sidebar__link">Students</a></li>
+        <li><a href="teachers.html" class="sidebar__link">Teachers</a></li>
+        <li><a href="classes.html" class="sidebar__link is-active">Classes &amp; Subjects</a></li>
+      </ul>
+
+      <p class="sidebar__section-label">Academics</p>
+      <ul class="sidebar__nav">
+        <li><a href="../attendance.html" class="sidebar__link">Attendance</a></li>
+        <li><a href="../grades.html" class="sidebar__link">Grades</a></li>
+        <li><a href="timetable.html" class="sidebar__link">Timetable</a></li>
+      </ul>
+
+      <p class="sidebar__section-label">Communication</p>
+      <ul class="sidebar__nav">
+        <li><a href="announcements.html" class="sidebar__link">Announcements</a></li>
+      </ul>
+    </aside>
+
+    <header class="topbar">
+      <h2 class="topbar__title">Classes &amp; Subjects</h2>
+      <div class="topbar__user">
+        <span class="role-pill" id="userRole">Admin</span>
+        <span id="userName">—</span>
+        <button class="btn btn-secondary btn-sm" id="logoutBtn">Log out</button>
+      </div>
+    </header>
+
+    <main class="main">
+
+      <div id="classesAlert"></div>
+
+      <!-- ================= CLASSES ================= -->
+      <section class="card">
+        <div class="card__header">
+          <h3 id="classFormTitle">Add class</h3>
+        </div>
+        <form id="classForm">
+          <input type="hidden" id="classId" />
+          <div class="form-grid">
+            <div class="field">
+              <label for="classDomain">Class Domain</label>
+              <input type="text" name="classDomain" id="classDomain" placeholder="e.g. Junior">
+              <label for="classGroup">Class Group</label>
+              <input type="text" name="classGroup" id="classGroup" placeholder="e.g. JSS1">
+              <label for="classArm">Class Arm</label>
+              <input type="text" name="classArm" id="classArm" placeholder="e.g. A">
+            </div>
+            <div class="field">
+              <label for="formTeacher">Class teacher</label>
+              <select id="formTeacher">
+                <option value="" disabled selected>Select teacher</option>
+                <!-- populated from sms_teachers at runtime -->
+              </select>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Save class</button>
+            <button type="button" class="btn btn-secondary" id="cancelClassEditBtn">Cancel</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="card">
+        <div class="table-toolbar">
+          <h3 style="margin:0;">All classes</h3>
+          <input type="search" id="classSearch" placeholder="Search by class name" />
+        </div>
+
+        <div class="table-wrap">
+          <table class="data-table" id="classesTable">
+            <thead>
+              <tr>
+                <th>Class Domain</th>
+                <th>Class Group</th>
+                <th>Class Arm</th>
+                <th>Form Teacher</th>
+                <th># Students</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="classesTableBody">
+              <!-- rows rendered by js/classes.js -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ================= SUBJECTS ================= -->
+      <section class="card">
+        <div class="card__header">
+          <h3 id="subjectFormTitle">Add subject</h3>
+        </div>
+        <form id="subjectForm">
+          <input type="hidden" id="subjectId" />
+          <div class="form-grid">
+            <div class="field">
+              <label for="subjectName">Subject name</label>
+              <input type="text" id="subjectName" placeholder="e.g. Mathematics" required />
+            </div>
+            <div class="field">
+              <label>Taught in class</label>
+              <label for="subject_classDomain">Class type</label>
+              <select name="subject_classDomain" id="subject_classDomain" required>
+                <option value="" selected disabled>Select a class domain</option>
+                <!-- Populated from subject.js -->
+              </select>
+              <label for="subject_classGroup">Class group</label>
+              <select name="subject_classGroup" id="subject_classGroup">
+                <option value="" selected disabled>Select a class group</option>
+                <!-- Populated from subject.js -->
+              </select>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Save subject</button>
+            <button type="button" class="btn btn-secondary" id="cancelSubjectEditBtn">Cancel</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="card">
+        <div class="table-toolbar">
+          <h3 style="margin:0;">All subjects</h3>
+          <input type="search" id="subjectSearch" placeholder="Search by subject name" />
+        </div>
+
+        <div class="table-wrap">
+          <table class="data-table" id="subjectsTable">
+            <thead>
+              <tr>
+                <th>Subject name</th>
+                <th>Class</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="subjectsTableBody">
+              <!-- rows rendered by js/classes.js -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script type="module" src="../../js/database/db.js"></script>
+  <script type="module" src="../../js/auth.js"></script>
+  <script type="module" src="../../js/utils.js"></script>
+  <script type="module" src="../../js/class.js"></script>
+  <script type="module" src="../../js/subject.js"></script>
+</body>
+
+</html>

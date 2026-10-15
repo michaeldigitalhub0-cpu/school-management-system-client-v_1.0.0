@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Attendance — School Management System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <!-- <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap"
+    rel="stylesheet"> -->
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+
+<body>
+
+  <div class="app-shell">
+
+    <aside class="sidebar">
+      <div class="sidebar__brand">School<span>MS</span></div>
+
+      <p class="sidebar__section-label">Overview</p>
+      <ul class="sidebar__nav">
+        <li><a href="./admin-pages/dashboard.html" class="sidebar__link">Dashboard</a></li>
+      </ul>
+
+      <p class="sidebar__section-label">Records</p>
+      <ul class="sidebar__nav">
+        <li><a href="../pages/admin-pages/students.html" class="sidebar__link">Students</a></li>
+        <li><a href="../pages/admin-pages/teachers.html" class="sidebar__link">Teachers</a></li>
+        <li><a href="../pages/admin-pages/classes.html" class="sidebar__link">Classes &amp; Subjects</a></li>
+      </ul>
+
+      <p class="sidebar__section-label">Academics</p>
+      <ul class="sidebar__nav">
+        <li><a href="./attendance.html" class="sidebar__link is-active">Attendance</a></li>
+        <li><a href="./grades.html" class="sidebar__link">Grades</a></li>
+        <li><a href="../pages/admin-pages/timetable.html" class="sidebar__link">Timetable</a></li>
+      </ul>
+
+      <p class="sidebar__section-label">Communication</p>
+      <ul class="sidebar__nav">
+        <li><a href="admin-pages/announcements.html" class="sidebar__link">Announcements</a></li>
+      </ul>
+    </aside>
+
+    <header class="topbar">
+      <h2 class="topbar__title">Attendance</h2>
+      <div class="topbar__user">
+        <span class="role-pill" id="userRole">Admin</span>
+        <span id="userName">—</span>
+        <button class="btn btn-secondary btn-sm" id="logoutBtn">Log out</button>
+      </div>
+    </header>
+
+    <main class="main">
+
+      <div id="attendanceAlert"></div>
+
+      <!-- ============ 1. MARK ATTENDANCE (teacher; admin sees read-only) ============ -->
+      <section class="card">
+        <div class="card__header">
+          <h3>Mark attendance</h3>
+        </div>
+        <div class="form-grid">
+          <div class="field">
+            <h2>Class domain</h2>
+            <p id="domain">Domain</p>
+          </div>
+          <div class="field">
+            <h2>Class group</h2>
+            <p id="group">group</p>
+          </div>
+          <div class="field">
+            <h2>Class arm</h2>
+            <p id="arm">Arm</p>
+          </div>
+          <div class="field">
+            <h2>Current Date</h2>
+            <p id="date"></p>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary btn-sm" id="loadClassListBtn">Load new class list</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card__header">
+          <h3 style="margin:0;">Class roster</h3>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table" id="attendanceRosterTable">
+            <thead>
+              <tr>
+                <th>S/N</th>
+                <th>Admission No.</th>
+                <th>Name</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="attendanceRosterBody">
+              <tr>
+                <td colspan="4">
+                  <div class="empty-state">Select a class and date, then "Load new class list."</div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="form-actions">
+          <!-- Hidden entirely for admin — view-only per the role model -->
+          <button type="button" class="btn btn-primary" id="saveAttendanceBtn">Save attendance</button>
+          <button type="button" class="btn btn-primary" id="updateCurrentAttendance">Update record</button>
+        </div>
+      </section>
+
+      <!-- ============ 2. LOOK UP A PAST DAY ============ -->
+      <section class="card">
+        <div class="card__header">
+          <h3>Look up attendance for a specific day</h3>
+        </div>
+        <p style="color: var(--color-text-muted); font-size: 0.85rem; margin-top: -8px;">
+          Separate from marking above — this retrieves what was already recorded, for any past date.
+        </p>
+        <div class="form-grid">
+          <div class="field">
+            <label for="lookupClassDomain">Class Domain</label>
+            <select id="lookupClassDomain" required>
+              <option value="" disabled selected>Select class Domain</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="lookupClassGroup">Class group</label>
+            <select id="lookupClassGroup" required>
+              <option value="" disabled selected>Select class group</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="lookupClassArm">Class Arm</label>
+            <select id="lookupClassArm" required>
+              <option value="" disabled selected>Select class Arm</option>
+
+            </select>
+          </div>
+          <div class="field">
+            <label for="lookupDate">Date</label>
+            <input type="date" id="lookupDate" required />
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary btn-sm" id="lookupDayBtn">Look up this day</button>
+        </div>
+      </section>
+
+      <!-- ============ 3. DAILY SUMMARY (populated by the lookup above) ============ -->
+      <section class="stat-grid" id="dailySummaryGrid">
+        <div class="stat-card">
+          <div class="stat-card__value" id="summaryTotal">—</div>
+          <div class="stat-card__label">Total students</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__value" id="summaryPresent">—</div>
+          <div class="stat-card__label">Present</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__value" id="summaryAbsent">—</div>
+          <div class="stat-card__label">Absent</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__value" id="summaryPercent">—</div>
+          <div class="stat-card__label">% present</div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card__header">
+          <h3 style="margin:0;">Roster for looked-up day</h3>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Admission No.</th>
+                <th>Name</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="dailyLookupBody">
+              <tr>
+                <td colspan="3">
+                  <div class="empty-state">Use "Look up this day" above to see a past day's roster.</div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ============ 4. FULL HISTORY (all dates, searchable) ============ -->
+      <section class="card">
+        <div class="table-toolbar">
+          <h3 style="margin:0;">Full attendance history</h3>
+          <input type="search" id="attendanceHistorySearch" placeholder="Search by admission no. or name" />
+        </div>
+        <div class="form-grid" style="margin-bottom: 12px;">
+          <div class="field">
+            <label for="historyDateFilter">Filter by date</label>
+            <input type="date" id="historyDateFilter" />
+          </div>
+          <div class="field">
+            <label for="historyClassFilterDomain">Class domain</label>
+            <select id="historyClassFilterDomain">
+              <option value="">All classes</option>
+              <!-- populated from sms__classes at runtime -->
+            </select>
+          </div>
+          <div class="field">
+            <label for="historyClassFilterGroup">Class group</label>
+            <select id="historyClassFilterGroup">
+              <option value="">All classes</option>
+              <!-- populated from sms__classes at runtime -->
+            </select>
+          </div>
+          <div class="field">
+            <label for="historyClassFilterArm">Class arm</label>
+            <select id="historyClassFilterArm">
+              <option value="">All classes</option>
+              <!-- populated from sms__classes at runtime -->
+            </select>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Class</th>
+                <th>Admission No.</th>
+                <th>Name</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="attendanceHistoryBody">
+              <tr>
+                <td colspan="5">
+                  <div class="empty-state">No attendance recorded yet.</div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script type="module" src="../js/database/db.js"></script>
+  <script type="module" src="../js/auth.js"></script>
+  <script type="module" src="../js/utils.js"></script>
+  <script type="module" src="../js/attendance.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Dashboard — School Management System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <!-- <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" 
+  rel="stylesheet" /> -->
+  <link rel="stylesheet" href="../../css/style.css" />
+</head>
+
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="sidebar__brand">School<span>MS</span></div>
+
+      <p class="sidebar__section-label">Overview</p>
+      <ul class="sidebar__nav">
+        <li>
+          <a href="dashboard.html" class="sidebar__link is-active">My Dashboard</a>
+        </li>
+      </ul>
+
+      <p class="sidebar__section-label">Academics</p>
+      <ul class="sidebar__nav">
+        <li>
+          <a href="../attendance.html" class="sidebar__link">Attendance</a>
+        </li>
+        <li>
+          <a href="../grades.html" class="sidebar__link">Students Grades</a>
+        </li>
+      </ul>
+
+      <p class="sidebar__section-label">Communication</p>
+      <ul class="sidebar__nav">
+        <li>
+          <a href="../admin-pages/announcements.html" class="sidebar__link">Announcements</a>
+        </li>
+      </ul>
+    </aside>
+
+    <header class="topbar">
+      <h2 class="topbar__title">My Dashboard</h2>
+      <div class="topbar__user">
+        <span class="role-pill" id="userRole">Teacher</span>
+        <span id="userName">—</span>
+        <button class="btn btn-secondary btn-sm" id="logoutBtn">
+          Log out
+        </button>
+      </div>
+    </header>
+
+    <main class="main">
+      <div id="dashboardAlert"></div>
+      <!-- Teacher identity card -->
+      <section class="card">
+        <div class="card__header">
+          <h3>My details</h3>
+        </div>
+        <div class="form-grid">
+          <div>
+            <strong>Name:</strong> <span id="teacherFullName">—</span>
+          </div>
+          <div>
+            <strong>Staff ID:</strong> <span id="teacherStaffID">—</span>
+          </div>
+          <div>
+            <strong>Assigned class:</strong> <span id="teacherClass">—</span>
+          </div>
+          <div>
+            <strong>Contact:</strong> <span id="teacherContact">—</span>
+          </div>
+        </div>
+        <div style="margin-top: 10px">
+          <strong>Subjects taught:</strong>
+          <span id="teacherSubjects">—</span>
+        </div>
+      </section>
+
+      <!-- Class + attendance stats -->
+      <section class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-card__value" id="statClassSize">—</div>
+          <div class="stat-card__label">Students in my class</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__value" id="statTodayAttendance">—</div>
+          <div class="stat-card__label">Today's attendance</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__value" id="statTodayPercent">—</div>
+          <div class="stat-card__label">% present today</div>
+        </div>
+      </section>
+
+      <div class="form-actions" style="margin: -8px 0 20px">
+        <a href="../attendance.html" class="btn btn-primary btn-sm">Go to Attendance</a>
+      </div>
+
+      <!-- Today's timetable -->
+      <section class="card">
+        <div class="card__header">
+          <h3 style="margin: 0">Today's timetable</h3>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Subject</th>
+                <th>Class</th>
+              </tr>
+            </thead>
+            <tbody id="todayTimetableBody">
+
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Your class's timetable -->
+      <section class="card">
+        <div class="card__header">
+          <h3 style="margin: 0">Class current time table</h3>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table" id="timetableGrid">
+            <thead>
+              <tr>
+                <th>Period</th>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+              </tr>
+            </thead>
+            <tbody id="classWeekTimetableBody"></tbody>
+          </table>
+        </div>
+        <!-- <div class="form-actions">
+          <button type="button" class="btn btn-primary" id="printTimetable">Print</button>
+        </div> -->
+      </section>
+    </main>
+  </div>
+
+  <script type="module" src="../../js/database/db.js"></script>
+  <script type="module" src="../../js/auth.js"></script>
+  <script type="module" src="../../js/utils.js"></script>
+  <script type="module" src="../../js/teacher-dashboard.js"></script>
+</body>
+
+</html>

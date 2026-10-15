@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Announcements — School Management System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <!-- <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap"
+    rel="stylesheet" /> -->
+  <link rel="stylesheet" href="../../css/style.css" />
+</head>
+
+<body>
+
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="sidebar__brand">School<span>MS</span></div>
+
+      <p class="sidebar__section-label">Overview</p>
+      <ul class="sidebar__nav">
+        <li><a href="dashboard.html" class="sidebar__link">Dashboard</a></li>
+      </ul>
+
+      <p class="sidebar__section-label">Records</p>
+      <ul class="sidebar__nav">
+        <li><a href="students.html" class="sidebar__link">Students</a></li>
+        <li><a href="teachers.html" class="sidebar__link">Teachers</a></li>
+        <li>
+          <a href="classes.html" class="sidebar__link">Classes &amp; Subjects</a>
+        </li>
+      </ul>
+
+      <p class="sidebar__section-label">Academics</p>
+      <ul class="sidebar__nav">
+        <li>
+          <a href="../attendance.html" class="sidebar__link">Attendance</a>
+        </li>
+        <li><a href="../grades.html" class="sidebar__link">Grades</a></li>
+        <li><a href="timetable.html" class="sidebar__link">Timetable</a></li>
+      </ul>
+
+      <p class="sidebar__section-label">Communication</p>
+      <ul class="sidebar__nav">
+        <li>
+          <a href="announcements.html" class="sidebar__link is-active">Announcements</a>
+        </li>
+      </ul>
+    </aside>
+
+    <header class="topbar">
+      <h2 class="topbar__title">Announcements</h2>
+      <div class="topbar__user">
+        <span class="role-pill" id="userRole">Admin</span>
+        <span id="userName">—</span>
+        <button class="btn btn-secondary btn-sm" id="logoutBtn">
+          Log out
+        </button>
+      </div>
+    </header>
+
+    <main class="main">
+      <div id="announcementsAlert"></div>
+
+      <!-- Post form -->
+      <section class="card">
+        <div class="card__header">
+          <h3 id="formTitle">Post announcement</h3>
+        </div>
+        <form id="announcementForm">
+          <input type="hidden" id="announcementId" />
+          <div class="form-grid">
+            <div class="field">
+              <label for="announcementTitle">Title</label>
+              <input type="text" id="announcementTitle" required />
+            </div>
+            <div class="field">
+              <label for="announcementAudience">Audience</label>
+              <select id="announcementAudience" required>
+                <option value="" disabled selected>Select audience</option>
+                <option value="all">Everyone</option>
+                <option value="students">Students only</option>
+                <option value="teachers">Teachers only</option>
+              </select>
+            </div>
+          </div>
+          <div class="field" style="margin-top: 16px">
+            <label for="announcementBody">Message</label>
+            <textarea id="announcementBody" rows="4" required></textarea>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+              Post announcement
+            </button>
+            <button type="button" class="btn btn-secondary" id="cancelEditBtn">
+              Cancel
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <!-- List -->
+      <section class="card">
+        <div class="card__header">
+          <h3 style="margin: 0">All announcements</h3>
+        </div>
+        <div id="announcementsList">
+          <div class="empty-state">No announcements posted yet.</div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script type="module" src="../../js/database/db.js"></script>
+  <script type="module" src="../../js/auth.js"></script>
+  <script type="module" src="../../js/utils.js"></script>
+  <script type="module" src="../../js/announcements.js"></script>
+</body>
+
+</html>

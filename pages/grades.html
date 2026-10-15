@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Grades — School Management System</title>
+  <!-- <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap"
+    rel="stylesheet" /> -->
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="sidebar__brand">School<span>MS</span></div>
+
+      <p class="sidebar__section-label">Overview</p>
+      <ul class="sidebar__nav">
+        <li>
+          <a href="../pages/admin-pages/dashboard.html" class="sidebar__link">Dashboard</a>
+        </li>
+      </ul>
+
+      <p class="sidebar__section-label">Records</p>
+      <ul class="sidebar__nav">
+        <li>
+          <a href="../pages/admin-pages/students.html" class="sidebar__link">Students</a>
+        </li>
+        <li>
+          <a href="../pages/admin-pages/teachers.html" class="sidebar__link">Teachers</a>
+        </li>
+        <li>
+          <a href="../pages/admin-pages/classes.html" class="sidebar__link">Classes &amp; Subjects</a>
+        </li>
+      </ul>
+
+      <p class="sidebar__section-label">Academics</p>
+      <ul class="sidebar__nav">
+        <li>
+          <a href="./attendance.html" class="sidebar__link">Attendance</a>
+        </li>
+        <li>
+          <a href="./grades.html" class="sidebar__link is-active">Grades</a>
+        </li>
+        <li>
+          <a href="../pages/admin-pages/timetable.html" class="sidebar__link">Timetable</a>
+        </li>
+      </ul>
+
+      <p class="sidebar__section-label">Communication</p>
+      <ul class="sidebar__nav">
+        <li>
+          <a href="admin-pages/announcements.html" class="sidebar__link">Announcements</a>
+        </li>
+      </ul>
+    </aside>
+
+    <header class="topbar">
+      <h2 class="topbar__title">Grades</h2>
+      <div class="topbar__user">
+        <span class="role-pill" id="userRole">Admin</span>
+        <span id="userName">—</span>
+        <button class="btn btn-secondary btn-sm" id="logoutBtn">
+          Log out
+        </button>
+      </div>
+    </header>
+
+    <main class="main">
+      <div id="gradesAlert"></div>
+
+      <!-- Score entry form -->
+      <section class="card">
+        <div class="card__header">
+          <h3 id="formTitle">Enter score</h3>
+        </div>
+        <form id="gradeForm">
+          <input type="hidden" id="gradeId" />
+          <div class="form-grid">
+            <div class="field">
+              <label for="gradeAdmissionNo">Student</label>
+              <select id="gradeAdmissionNo" required>
+                <option value="" disabled selected>Select student</option>
+                <!-- populated from sms__students at runtime -->
+              </select>
+            </div>
+            <div class="field">
+              <label for="gradeSubject">Subject</label>
+              <select id="gradeSubject" required>
+                <option value="" disabled selected>Select subject</option>
+                <!-- populated from sms__subjects at runtime -->
+              </select>
+            </div>
+            <div class="field">
+              <label for="gradeTerm">Term</label>
+              <select id="gradeTerm" required>
+                <option value="" disabled selected>Select term</option>
+                <option value="first">First Term</option>
+                <option value="second">Second Term</option>
+                <option value="third">Third Term</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="gradeCA1">CA1 (out of 20)</label>
+              <input type="number" id="gradeCA1" min="0" max="20" required />
+            </div>
+            <div class="field">
+              <label for="gradeCA2">CA2 (out of 20)</label>
+              <input type="number" id="gradeCA2" min="0" max="20" required />
+            </div>
+            <div class="field">
+              <label for="gradeExam">Exam (out of 60)</label>
+              <input type="number" id="gradeExam" min="0" max="60" required />
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Save score</button>
+            <button type="button" class="btn btn-secondary" id="cancelEditBtn">
+              Cancel
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <!-- Records table -->
+      <section class="card">
+        <div class="table-toolbar">
+          <h3 style="margin: 0">All scores</h3>
+          <input type="search" id="gradeSearch" placeholder="Search by admission no. or name" />
+        </div>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Admission No.</th>
+                <th>Name</th>
+                <th>Subject</th>
+                <th>Term</th>
+                <th>Session</th>
+                <th>CA1</th>
+                <th>CA2</th>
+                <th>Exam</th>
+                <th>Total</th>
+                <th>Grade</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="gradesTableBody">
+              <tr>
+                <td colspan="10">
+                  <div class="empty-state">No scores entered yet.</div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Result sheet link -->
+      <section class="card">
+        <div class="card__header">
+          <h3>Print a result sheet</h3>
+        </div>
+        <form id="openStudentResult">
+          <div class="form-grid">
+            <div class="field">
+              <label for="resultAdmissionNo">Student</label>
+              <select id="resultAdmissionNo" required>
+                <option value="" disabled selected>Select student</option>
+                <!-- populated from sms__students at runtime -->
+              </select>
+            </div>
+            <div class="field">
+              <label for="resultTerm">Term</label>
+              <select id="resultTerm" required>
+                <option value="" disabled selected>Select term</option>
+                <option value="first">First Term</option>
+                <option value="second">Second Term</option>
+                <option value="third">Third Term</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="resultSession">Session</label>
+              <select id="resultSession" required>
+                <option value="" disabled selected>Select Session</option>
+                <!-- Populated from grades.js -->
+              </select>
+            </div>
+          </div>
+          <div class="form-actions">
+            <input type="submit" class="btn btn-primary" id="openResultBtn" value="Open result sheet" />
+          </div>
+        </form>
+      </section>
+    </main>
+  </div>
+
+  <script type="module" src="../js/database/db.js"></script>
+  <script type="module" src="../js/auth.js"></script>
+  <script type="module" src="../js/utils.js"></script>
+  <script type="module" src="../js/grades.js"></script>
+</body>
+
+</html>

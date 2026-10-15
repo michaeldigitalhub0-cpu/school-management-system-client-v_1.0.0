@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login — School Management System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <!-- <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap"
+    rel="stylesheet"> -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+
+  <main class="login-screen">
+    <div class="login-card">
+      <div class="login-card__brand">School<span>MS</span></div>
+      <p class="login-card__subtitle">Sign in to your dashboard</p>
+
+      <div id="loginAlert"></div>
+
+      <form id="loginForm">
+        <div class="form-grid" style="grid-template-columns: 1fr;">
+          <div class="field">
+            <label for="user-id">User ID</label>
+            <input type="text" id="user-id" name="user-id" required autocomplete="user-id" />
+          </div>
+
+          <div class="field">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required autocomplete="current-password" />
+          </div>
+
+          <div class="field">
+            <label for="role">Role</label>
+            <select id="role" name="role" required>
+              <option value="" disabled selected>Select role</option>
+              <option value="admin">Admin</option>
+              <option value="teacher">Teacher</option>
+              <option value="student">Student</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-actions" style="margin-top:22px;">
+          <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center;">
+            Sign in
+          </button>
+        </div>
+      </form>
+    </div>
+  </main>
+  <div class="modal-overlay is-hidden" id="welcomeModal">
+    <div class="modal-box">
+      <div class="modal-box__title" id="welcomeModalTitle">Welcome</div>
+      <div class="modal-box__subtitle" id="welcomeModalSubtitle">Redirecting…</div>
+    </div>
+  </div>
+
+  <script type="module" src="./js/database/db.js"></script>
+  <script type="module" src="./js/services/auth.service.js"></script>
+  <script type="module" src="./js/utils.js"></script>
+  <script type="module" src="./js/auth.js"></script>
+</body>
+
+</html>

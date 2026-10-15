@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Students — School Management System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <!-- <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap"
+    rel="stylesheet" /> -->
+  <link rel="stylesheet" href="../../css/style.css" />
+</head>
+
+<body>
+  <div class="app-shell">
+    <!-- SIDEBAR (identical across pages — same markup as dashboard.html) -->
+    <aside class="sidebar">
+      <div class="sidebar__brand">School<span>MS</span></div>
+
+      <p class="sidebar__section-label">Overview</p>
+      <ul class="sidebar__nav">
+        <li><a href="dashboard.html" class="sidebar__link">Dashboard</a></li>
+      </ul>
+
+      <p class="sidebar__section-label">Records</p>
+      <ul class="sidebar__nav">
+        <li>
+          <a href="students.html" class="sidebar__link is-active">Students</a>
+        </li>
+        <li><a href="teachers.html" class="sidebar__link">Teachers</a></li>
+        <li>
+          <a href="classes.html" class="sidebar__link">Classes &amp; Subjects</a>
+        </li>
+      </ul>
+
+      <p class="sidebar__section-label">Academics</p>
+      <ul class="sidebar__nav">
+        <li>
+          <a href="../attendance.html" class="sidebar__link">Attendance</a>
+        </li>
+        <li><a href="../grades.html" class="sidebar__link">Grades</a></li>
+        <li><a href="timetable.html" class="sidebar__link">Timetable</a></li>
+      </ul>
+
+      <p class="sidebar__section-label">Communication</p>
+      <ul class="sidebar__nav">
+        <li>
+          <a href="announcements.html" class="sidebar__link">Announcements</a>
+        </li>
+      </ul>
+    </aside>
+
+    <header class="topbar">
+      <h2 class="topbar__title">Students</h2>
+      <div class="topbar__user">
+        <span class="role-pill" id="userRole">Admin</span>
+        <span id="userName">—</span>
+        <button class="btn btn-secondary btn-sm" id="logoutBtn">
+          Log out
+        </button>
+      </div>
+    </header>
+
+    <main class="main">
+      <div id="studentsAlert"></div>
+
+      <!-- Add / edit form -->
+      <section class="card">
+        <div class="card__header">
+          <h3 id="formTitle">Add student</h3>
+        </div>
+        <form id="studentForm">
+          <div class="form-grid">
+            <div class="field">
+              <label for="firstName">First name</label>
+              <input type="text" id="firstName" required />
+            </div>
+            <div class="field">
+              <label for="lastName">Last name</label>
+              <input type="text" id="lastName" required />
+            </div>
+            <div class="field">
+              <label for="middleName">Middle name</label>
+              <input type="text" id="middleName" />
+            </div>
+            <div class="field">
+              <label for="classDomain">Class domain</label>
+              <select id="classDomain" required>
+                <option value="" disabled selected>Select class domain</option>
+                <!-- populated from sms__classes at runtime -->
+              </select>
+              <label for="classGroup">Class Group</label>
+              <select id="classGroup" required>
+                <option value="" disabled selected>Select class group</option>
+                <!-- populated from sms__classes at runtime -->
+              </select>
+              <label for="classArm">Class arm</label>
+              <select id="classArm" required>
+                <option value="" disabled selected>Select class arm</option>
+                <!-- populated from sms__classes at runtime -->
+              </select>
+            </div>
+            <div class="field">
+              <label for="gender">Gender</label>
+              <select id="gender" required>
+                <option value="" disabled selected>Select</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="dob">Date of birth</label>
+              <input type="date" id="dob" required />
+            </div>
+            <div class="field">
+              <label for="studentContact">Contact</label>
+              <input type="text" id="studentContact" required />
+            </div>
+            <div class="field">
+              <label for="guardianLName">Guardian first name</label>
+              <input type="text" id="guardianFirstName" required />
+            </div>
+            <div class="field">
+              <label for="guardianLastName">Guardian last name</label>
+              <input type="text" id="guardianLastName" required />
+            </div>
+            <div class="field">
+              <label for="guardianMiddleName">Guardian middle name</label>
+              <input type="text" id="guardianMiddleName" />
+            </div>
+            <div class="field">
+              <label for="guardianContact">Guardian contact</label>
+              <input type="tel" id="guardianContact" required />
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+              Save student
+            </button>
+            <button type="reset" class="btn btn-secondary">Cancel</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- Records table -->
+      <section class="card">
+        <div class="table-toolbar">
+          <h3 style="margin: 0">All students</h3>
+          <input type="search" id="studentSearch" placeholder="Search by name or admission no." />
+        </div>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Admission No.</th>
+                <th>Name</th>
+                <th>Class</th>
+                <th>Gender</th>
+                <th>Contact</th>
+                <th>Guardian</th>
+                <th>Guardian Contact</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="studentsTableBody">
+              <!-- rows rendered by js/students.js -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script type="module" src="../../js/database/db.js"></script>
+  <script type="module" src="../../js/auth.js"></script>
+  <script type="module" src="../../js/utils.js"></script>
+  <script type="module" src="../../js/student.js"></script>
+</body>
+
+</html>

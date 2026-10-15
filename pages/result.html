@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Result Sheet — School Management System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/print.css" media="print" />
+</head>
+
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="sidebar__brand">School<span>MS</span></div>
+
+      <p class="sidebar__section-label">Overview</p>
+      <ul class="sidebar__nav">
+        <li>
+          <a href="../pages/admin-pages/dashboard.html" class="sidebar__link">Dashboard</a>
+        </li>
+      </ul>
+
+      <p class="sidebar__section-label">Records</p>
+      <ul class="sidebar__nav">
+        <li>
+          <a href="../pages/admin-pages/students.html" class="sidebar__link">Students</a>
+        </li>
+        <li>
+          <a href="../pages/admin-pages/teachers.html" class="sidebar__link">Teachers</a>
+        </li>
+        <li>
+          <a href="../pages/admin-pages/classes.html" class="sidebar__link">Classes &amp; Subjects</a>
+        </li>
+      </ul>
+
+      <p class="sidebar__section-label">Academics</p>
+      <ul class="sidebar__nav">
+        <li>
+          <a href="./attendance.html" class="sidebar__link">Attendance</a>
+        </li>
+        <li><a href="./grades.html" class="sidebar__link">Grades</a></li>
+        <li>
+          <a href="../pages/admin-pages/timetable.html" class="sidebar__link">Timetable</a>
+        </li>
+      </ul>
+
+      <p class="sidebar__section-label">Communication</p>
+      <ul class="sidebar__nav">
+        <li>
+          <a href="admin-pages/announcements.html" class="sidebar__link">Announcements</a>
+        </li>
+      </ul>
+    </aside>
+
+    <header class="topbar">
+      <h2 class="topbar__title">Result Sheet</h2>
+      <div class="topbar__user">
+        <span class="role-pill" id="userRole">Admin</span>
+        <span id="userName">—</span>
+        <button class="btn btn-secondary btn-sm" id="logoutBtn">
+          Log out
+        </button>
+      </div>
+    </header>
+
+    <main class="main">
+      <div class="no-print" style="margin-bottom: 16px">
+        <button type="button" class="btn btn-primary" id="printResultBtn">
+          Print this result sheet
+        </button>
+      </div>
+
+      <!-- Everything inside .printable is what print.css keeps visible
+           when "Print this result sheet" is used — see css/print.css -->
+      <section class="card printable" id="resultSheet">
+        <div style="text-align: center; margin-bottom: 20px">
+          <h1 style="margin-bottom: 2px">School Name</h1>
+          <p style="color: var(--color-text-muted); margin: 0">
+            Student Result Sheet
+          </p>
+        </div>
+
+        <div class="form-grid" style="margin-bottom: 20px">
+          <div>
+            <strong>Name:</strong> <span id="resultStudentName">—</span>
+          </div>
+          <div>
+            <strong>Admission No.:</strong>
+            <span id="resultAdmissionNo">—</span>
+          </div>
+          <div><strong>Class:</strong> <span id="resultClass">—</span></div>
+          <div>
+            <strong>Term:</strong> <span id="resultTermLabel">—</span>
+          </div>
+          <div>
+            <strong>Session:</strong> <span id="resultSessionLabel">—</span>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Subject</th>
+                <th>CA1</th>
+                <th>CA2</th>
+                <th>Exam</th>
+                <th>Total</th>
+                <th>Grade</th>
+              </tr>
+            </thead>
+            <tbody id="resultRowsBody">
+              <tr>
+                <td colspan="6">
+                  <div class="empty-state">
+                    No scores recorded for this student/term yet.
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="form-grid" style="margin-top: 24px">
+          <div>
+            <strong>Overall average:</strong>
+            <span id="resultAverage">—</span>
+          </div>
+          <div>
+            <strong>Position in class:</strong>
+            <span id="resultPosition">—</span>
+          </div>
+        </div>
+
+        <div style="
+              margin-top: 40px;
+              display: flex;
+              justify-content: space-between;
+            ">
+          <div>_____________________<br /><small>Class Teacher</small></div>
+          <div>_____________________<br /><small>Principal</small></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script type="module" src="../js/database/db.js"></script>
+  <script type="module" src="../js/auth.js"></script>
+  <script type="module" src="../js/utils.js"></script>
+  <script type="module" src="../js/result.js"></script>
+</body>
+
+</html>

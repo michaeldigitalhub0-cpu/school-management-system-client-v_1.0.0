@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — School Management System</title>
+  <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap"
+    rel="stylesheet"> -->
+  <link rel="stylesheet" href="../../css/style.css" />
+</head>
+
+<body>
+  <div class="app-shell">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar__brand">School<span>MS</span></div>
+
+      <p class="sidebar__section-label">Overview</p>
+      <ul class="sidebar__nav">
+        <li>
+          <a href="dashboard.html" class="sidebar__link is-active">Dashboard</a>
+        </li>
+      </ul>
+
+      <p class="sidebar__section-label">Records</p>
+      <ul class="sidebar__nav">
+        <li><a href="students.html" class="sidebar__link">Students</a></li>
+        <li><a href="teachers.html" class="sidebar__link">Teachers</a></li>
+        <li>
+          <a href="classes.html" class="sidebar__link">Classes &amp; Subjects</a>
+        </li>
+      </ul>
+
+      <p class="sidebar__section-label">Academics</p>
+      <ul class="sidebar__nav">
+        <li>
+          <a href="../attendance.html" class="sidebar__link">Attendance</a>
+        </li>
+        <li><a href="../grades.html" class="sidebar__link">Grades</a></li>
+        <li><a href="timetable.html" class="sidebar__link">Timetable</a></li>
+      </ul>
+
+      <p class="sidebar__section-label">Communication</p>
+      <ul class="sidebar__nav">
+        <li>
+          <a href="announcements.html" class="sidebar__link">Announcements</a>
+        </li>
+      </ul>
+    </aside>
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <h2 class="topbar__title">Dashboard</h2>
+      <div class="topbar__user">
+        <span class="role-pill" id="userRole">Admin</span>
+        <span id="userName">—</span>
+        <button class="btn btn-secondary btn-sm" id="logoutBtn">
+          Log out
+        </button>
+      </div>
+    </header>
+
+    <!-- MAIN -->
+    <main class="main">
+      <div id="dashboardAlert"></div>
+
+      <!-- Stat cards -->
+      <section class="stat-grid" id="statGrid">
+        <div class="stat-card">
+          <div class="stat-card__value" id="statStudents">0</div>
+          <div class="stat-card__label">Students</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__value" id="statTeachers">0</div>
+          <div class="stat-card__label">Teachers</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__value" id="statClasses">0</div>
+          <div class="stat-card__label">Classes</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__value" id="statAttendanceToday">0%</div>
+          <div class="stat-card__label">Attendance today</div>
+        </div>
+      </section>
+
+      <!-- Recent announcements -->
+      <section class="card">
+        <div class="card__header">
+          <h3>Recent announcements</h3>
+          <a href="announcements.html" class="btn btn-secondary btn-sm">View all</a>
+        </div>
+        <div id="announcementsList">
+          <div class="empty-state">No announcements yet.</div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script type="module" src="../../js/database/db.js"></script>
+  <script type="module" src="../../js/auth.js"></script>
+  <script type="module" src="../../js/utils.js"></script>
+  <script type="module" src="../../js/dashboard.js"></script>
+</body>
+
+</html>
